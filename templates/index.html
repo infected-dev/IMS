@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>HomePage</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="{{url_for('static', filename='css/bootstrap.min.css')}}" rel="stylesheet">
+    </head>
+    <body>
+        <div>
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <a class="navbar-brand text-warning" href="#">Inventory Management System</a>
+                <div class="container">
+                 
+                  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample07" aria-controls="navbarsExample07" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                  </button>
+              
+                  <div class="collapse navbar-collapse" id="navbarsExample07">
+                    <ul class="navbar-nav mr-auto">
+                      <li class="nav-item active">
+                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="{{url_for('current.main')}}">Current Stock</a>
+                      </li>
+                      
+                        <a class="nav-link" href="{{url_for('products.main')}}" id="dropdown07">Products</a>
+                        
+                      </li>
+                    </ul>
+                    <form class="form-inline">
+                      <input class="form-control" type="text" placeholder="Search" aria-label="Search">
+                    </form>
+                  </div>
+                </div>
+              </nav>
+        </div>
+        
+        <div>
+            {% block current %}
+
+            {% endblock %}
+
+            {% block products %}
+
+            {% endblock %}
+        </div>
+    </body>
+    <script src="{{url_for('static', filename='js/jquery.js')}}"></script>
+    <script src="{{url_for('static', filename='js/bootstrap.min.js')}}"></script>
+</html>
