@@ -3,11 +3,36 @@
 {% block current %}
 
 <div class="row">
-    <div class="col container">
-        <div class="card">
-            <h5 class="card-header align-self-center">Current Stock Information</h5>
+    <div class="col">
+        <div class="card mb-3">
+            <h5 class="card-header">Current Stock Information</h5>
         </div>
-    </div>
+        <div class="row m-1">
+            <div class="col">
+                <div class="card">
+                    <h6 class="card-header">Current Stock</h6>
+                    <div class="card-body"></div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class=" card ml-3">
+                    <h6 class="card-header">Recieved Stock</h6>
+                    <div class="card-body"></div>
+                </div>
+            </div>
+               
+                   
+            <div class="col">
+                <div class="card ml-3">
+                    <h6 class="card-header">Shipped Stock</h6>
+                    <div class="card-body"></div>
+                </div>
+            </div>
+                    
+            </div>
+        </div>
+               
 </div>
 
 {% endblock %}
