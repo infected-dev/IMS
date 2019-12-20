@@ -9,49 +9,40 @@
     </div>
 </div>
 
-<div class="container-fulid">
+<div class="container">
 
     <div class="row">
+        <button class="btn btn-block btn-primary mb-2" data-toggle="collapse" data-target="#mainmasters">Main Masters</button>
+    </div>
 
-        <div class="col-2 ml-2">
-            <button class="btn btn-block btn-primary mb-2" data-toggle="collapse" data-target="#mainmasters">Main Masters</button>
-            <div id="mainmasters" class="collapse">
-                <div class="card mb-3">
-                    <p class="card-header">Add new Fabric</p>
-                <form action="{{url_for('products.add_fabric')}}" method="POST">
-                    <div class="form-group p-2">
-                        <label for="fabric_name">Fabric:</label>
-                        <input id="fabric_name"  class="form-control" name="fabric_name">
+    <div id="mainmasters"  class="collapse row show justify-content-between">
+       
+            <div class="col-2">
+                    <div class="card mb-3">
+                            <p class="card-header">Add new Fabric</p>
+                        <form action="{{url_for('products.add_fabric')}}" method="POST">
+                            <div class="form-group p-2">
+                                <label for="fabric_name">Fabric:</label>
+                                <input id="fabric_name"  class="form-control" name="fabric_name" required>
+                            </div>
+                            <div class="form-group p-2">
+                                <input class="btn btn-primary btn-block" type="submit">
+                            </div>
+                            
+                        </form>
+                        
+    
+                       
+    
                     </div>
-                    <div class="form-group p-2">
-                        <input class="btn btn-primary btn-block" type="submit">
-                    </div>
-                    
-                </form>
-            </div>
-
-            <div class="card">
-                <p class="card-header">Add New Variation</p>
-                <form action="{{url_for('products.add_variation')}}" method="POST">
-                    <div class="form-group p-2">
-                        <label for="variation_name">Variation</label>
-                        <input id="variation_name" class="form-control" name="variation_name" type="text">
-                    </div>
-                    <div class="form-group p-2">
-                        <input class="btn btn-block btn-primary" type="submit">
-                    </div>
-                </form>
-            </div>
-            </div>
-        </div>
-
-        <div class="col-3">
-            <button class="btn btn-block btn-primary mb-2" data-toggle="collapse" data-target="#productmasters">Product Masters</button>
-            <div id="productmasters" class="collapse">
+                
+                </div>
+    
+            <div class="col-3">
                 <div class="card">
                     <p class="card-header">Add New Product</p>
                     <form action="{{url_for('products.add_product')}}" method="POST">
-                        <div class="form-row p-2">
+                      
                             <div class="form-group p-2">
                                 <label for='fabric_select'>Select Fabric</label>
                                 <select id="fabric_select" class="form-control form-control-sm" name="fabric_select">
@@ -60,62 +51,96 @@
                                     {% endfor %}
                                 </select>
                             </div>
+                            <div class="form-group p-2">
+                                <label for='product_name'>Product Name:</label>
+                                <input id="product_name" class="form-control" name="product_name" type="text" required >
+        
+                            </div>
+                        
     
-                        </div>
-    
-                        <div class="form-group p-2">
-                            <label for='product_name'>Product Name:</label>
-                            <input id="product_name" class="form-control" name="product_name" type="text" >
-    
-                        </div>
+                        
                         <div class="form-group p-2">
                             <input class="btn btn-primary btn-block" type="submit">
                         </div>
                     </form>
                 </div>
             </div>
+        <div class="col-4">
+            <div class=" card">
+                <p class="card-header">Add New Designs</p>
+                <form action="{{url_for('products.add_design')}}" method="POST">
+                 
+                        <div class="form-group p-2">
+                            <label for='product_name'>Product Name:</label>
+                            <select id="product_name" class="form-control form-control-sm" name="product_name">
+                                {% for p in allproducts %}
+                                    <option value="{{p.pid}}">{{p.product_name}}</option>
+                                {% endfor %}
+                            </select>
             
+                        </div>
             
-        </div>
-
-        <div class="col-6">
-            <button class="btn btn-block btn-primary mb-2" data-toggle="collapse" data-target="#designmasters">Designs Masters</button>
-            <div id="designmasters" class="collapse">
-                <div class="card">
-                    <p class="card-header">Add Designs and Variations</p>
-                    <form action="" method="POST">
-                        <div class="form-row p-2">
-                            <div class="form-group col-md-6">
-                                <label for='product_name'>Product Name:</label>
-                                <select id="product_name" class="form-control" name="product_name">
-                                    {% for p in allproducts %}
-                                        <option value="{{p.pid}}">{{p.product_name}}</option>
-                                    {% endfor %}
-                                </select>
-                
-                            </div>
-                
-                            <div class="form-group col-md-3">
-                                <label for="design_no">Design No:</label>
-                                <input id="design_no" class="form-control" name="design_no" type="number">
-                            </div>
-                            <div class="form-group col-md-2">
-                                <label for="variations">Variations:</label>
-                                <select class="form-control" id="variations">
-                                    {% for v in variations %}
-                                    <option value="{{v.vid}}">{{v.variation_name}}</option>
-                                    {% endfor %}
-                                </select>
+                        <div class="form-group p-2 col-4">
+                            <label for="design_no">Design No:</label>
+                            <input id="design_no" class="form-control" name="design_no" type="number" required>
                         </div>
-                        </div>
-                    </form>
+                        
                    
+                
+            
+            
+            <div class="form-group p-2">
+                <input class="btn btn-block btn-primary" type="submit">
+           
+            </div>   
+        </form>  
+        </div>
+                         
+    
+        
+    
+</div>
+<div class="col-3">
+    <div class="card">
+        <p class="card-header">Add Variants</p>
+        
+            
+            <form action="{{url_for('products.main')}}" method="POST">
+                <div class="form-group p-2">
+                    <label for='product_select'>Select Product</label>
+                    <select id="product_select" class="form-control form-control-sm" name="product_select" required>
+                        {% for p in allproducts %}
+                        <option value="{{p.pid}}">{{p.product_name}}</option>
+                        {% endfor %}
+                    </select>
+                    <input type="submit" class="btn btn-sm btn-primary">
                 </div>
-            </div>
-            
-            
-    </div>
+            </form>
+               
+            <form action="{{url_for('products.add_variant')}}" method="POST">   
+                <div class="form-group p-2">
+                    <label for="design_select">Select Design No:</label>
+                    <select id="design_select" name="design_select" class="form-control" required>
+                        {% for d in alldesings %}
+                            <option value="{{d.did}}">{{d.design_no}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group p-2">
+                    <label for='varaint_name'>Variation</label>
+                    <input id="varaint_name" class="form-control " name="varaint_name" type="text" required >
 
+                </div>
+            
+
+            
+            <div class="form-group p-2">
+                <input class="btn btn-primary btn-block" type="submit">
+            </div>
+        </form>
+    </div>
+</div>
+</div>
 </div>
 
 
