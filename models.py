@@ -36,26 +36,14 @@ class VariantMaster(db.Model):
 
     vmid = db.Column(db.Integer, primary_key=True)
     variant_name = db.Column(db.String(20), unique=True)
+    inventory_combine = db.relationship('Inventory', backref='variantname', lazy=True)
 
     def __init__(self, variant_name):
         self.variant_name = variant_name
 
-    def addVariant(self, did, vmid):
-        DV = Variation(d_id=did, variation_id=vmid)
-        db.session.add(DV)
-        db.session.commit()
 
 
-class Variation(db.Model):
-    __tablename__ = 'variation'
-
-    vid = db.Column(db.Integer, primary_key=True)
-    d_id = db.Column(db.Integer, db.ForeignKey('design.did'))
-    variation_id = db.Column(db.Integer, db.ForeignKey('variantmaster.vmid'))
-
-    def __init__(self,d_id,variation_id):
-        self.variation_id = variation_id
-        self.d_id = d_id
+    
 
 class Design(db.Model):
     __tablename__ = 'design'
@@ -63,14 +51,16 @@ class Design(db.Model):
     did = db.Column(db.Integer, primary_key=True)
     product_id = db.Column(db.Integer, db.ForeignKey('product.pid'))
     design_no = db.Column(db.Integer)
-    variations = db.relationship('Variation', backref='deno', lazy=True)
     inventory = db.relationship('Inventory', backref='deno', lazy=True)
 
     def __init__(self,product_id, design_no):
         self.product_id = product_id
-        self.design_no = design_no  
+        self.design_no = design_no
 
-
+    def addinventory(self,product_id, design_id,var_id):
+        in_ven = Inventory(p_id=product_id, d_id=design_id, v_id=var_id, recieved=0, dispatched=0, currrent=0, uom='mtr')
+        db.session.add(in_ven)
+        db.session.commit()
 
 
 class Operation(db.Model):
@@ -91,7 +81,7 @@ class Inventory(db.Model):
     iid = db.Column(db.Integer, primary_key=True)
     p_id = db.Column(db.Integer, db.ForeignKey('product.pid'))
     d_id = db.Column(db.Integer, db.ForeignKey('design.did'))
-    v_id = db.Column(db.Integer, db.ForeignKey('variation.vid'))
+    v_id = db.Column(db.Integer, db.ForeignKey('variantmaster.vmid'))
     custom_id = db.Column(db.String(20), unique=True)
     recieved = db.Column(db.Float)
     dispatched = db.Column(db.Float)
@@ -100,14 +90,13 @@ class Inventory(db.Model):
     logs = db.relationship('InventoryLog', backref='main', lazy=True)
 
 
-    def __init__(self,p_id, d_id,v_id,custom_id, recieved, dispatched, currrent, uom):
+    def __init__(self,p_id, d_id,v_id, recieved, dispatched, currrent, uom):
         self.p_id = p_id
         self.d_id = d_id
         self.v_id = v_id
-        self.custom_id = f"RP{self.p_id}D{self.d_id}V{self.v_id}"
-        self.recieved = recieved
-        self.dispatched =dispatched
-        self.currrent =currrent
+        self.recieved = 0
+        self.dispatched = 0
+        self.currrent = 0
         self.uom = uom
 
 

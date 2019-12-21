@@ -1,21 +1,23 @@
 from flask import Flask, render_template, url_for, url_for, Blueprint, request,redirect,flash
-from .models import Fabric, Product, Variation, Design
+from .models import Fabric, Product, Design, VariantMaster
 from . import db
 
 prod = Blueprint('products', __name__)
 
 @prod.route('/products', methods=['GET','POST'])
 def main():
-    variations = Variation.query.all()
+    
     fabrics = Fabric.query.all()
     allproducts = Product.query.all()
+    allvariants = VariantMaster.query.all()
     alldesings = ''
     if request.form:
         pid = int(request.form.get('product_select'))
         p = Product.query.get(pid)
         alldesings = p.designs
-    return render_template('products.html', variations=variations,
-        fabrics=fabrics, allproducts=allproducts, alldesings=alldesings)
+    return render_template('products.html',
+                           fabrics=fabrics, allproducts=allproducts, alldesings=alldesings,
+                           allvariants=allvariants)
 
 @prod.route('/addFabrics', methods=['POST'])
 def add_fabric():
@@ -67,11 +69,39 @@ def add_design():
                 flash('Design Created', category='alert-success')
                 return redirect(url_for('products.main'))
 
-@prod.route('/addVariant', methods=['POST'])
-def add_variant():
+@prod.route('/addVaraints', methods=['POST'])
+def add_variants():
     if request.form:
-        did = int(request.form.get('design_select'))
-        d = Design.query.get(did)
+        v = request.form.get('variant_name').title()
+        if v:
+            vq = VariantMaster.query.filter_by(variant_name=v).first()
+            if vq:
+                flash(f'{vq.variant_name} is already Registered', category='alert-danger')
+                return redirect(url_for('products.main'))
+            else:
+                v1 = VariantMaster(variant_name=v)
+                db.session.add(v1)
+                db.session.commit()
+                flash(f'{v1.variant_name} Added to Master', category='alert-success')
+                return redirect(url_for('products.main'))
+
+@prod.route('/addItem', methods=['POST'])
+def add_item():
+    if request.form:
+        design_no = request.form.get('design_select')
+        d = Design.query.get(design_no)
+        if d:
+            vid = request.form.getlist('varaint_name')
+            for v in vid:
+                v = int(v)
+                d.addinventory(product_id=d.product_id, design_id=d.did, var_id=v)
+                flash(f'Added {d.pduct.product_name} DesNo {d.design_no}V{v}') 
+            return redirect(url_for('products.main'))
+
+        return redirect(url_for('products.main'))
+
+
+
 
         
 

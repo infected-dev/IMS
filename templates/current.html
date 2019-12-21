@@ -49,7 +49,34 @@
          </div> 
     </div>
 
-    
+    <div class="row">
+      <div class="col">
+        <table class="table table-borderless">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Product Name</th>
+              <th>Design No</th>
+              <th>Varaint</th>
+              <th>Recieved</th>
+              <th>Dispatched</th>
+              <th>Current</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for ai in allinventory %}
+            <tr>
+              <td>{{ai.iid}}</td>
+              <td>{{ai.pduct.product_name}}</td>
+              <td>{{ai.deno.design_no}}</td>
+              <td>{{ai.variantname.variant_name}}</td>
+              <td></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
 </div>
    
                

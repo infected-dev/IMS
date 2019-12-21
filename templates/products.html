@@ -23,7 +23,7 @@
                         <form action="{{url_for('products.add_fabric')}}" method="POST">
                             <div class="form-group p-2">
                                 <label for="fabric_name">Fabric:</label>
-                                <input id="fabric_name"  class="form-control" name="fabric_name" required>
+                                <input type="text" id="fabric_name"  class="form-control" name="fabric_name" required>
                             </div>
                             <div class="form-group p-2">
                                 <input class="btn btn-primary btn-block" type="submit">
@@ -35,6 +35,24 @@
                        
     
                     </div>
+
+                    <div class="card mb-3">
+                        <p class="card-header">Add  Variants</p>
+                    <form action="{{url_for('products.add_variants')}}" method="POST">
+                        <div class="form-group p-2">
+                            <label for="variant_name">Variant:</label>
+                            <input id="variant_name"  class="form-control" name="variant_name" required>
+                        </div>
+                        <div class="form-group p-2">
+                            <input class="btn btn-primary btn-block" type="submit">
+                        </div>
+                        
+                    </form>
+                    
+
+                   
+
+                </div>
                 
                 </div>
     
@@ -117,7 +135,7 @@
                 </div>
             </form>
                
-            <form action="{{url_for('products.add_variant')}}" method="POST">   
+            <form action="{{url_for('products.add_item')}}" method="POST">   
                 <div class="form-group p-2">
                     <label for="design_select">Select Design No:</label>
                     <select id="design_select" name="design_select" class="form-control" required>
@@ -128,7 +146,12 @@
                 </div>
                 <div class="form-group p-2">
                     <label for='varaint_name'>Variation</label>
-                    <input id="varaint_name" class="form-control " name="varaint_name" type="text" required >
+                    <Select id="varaint_name" class="form-control " name="varaint_name" type="text" required multiple size="4" >
+                        {% for vm in allvariants %}
+                            <option value={{vm.vmid | int}}>{{vm.variant_name}}</option>
+                        {% endfor %}
+                        
+                    </Select> 
 
                 </div>
             
